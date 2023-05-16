@@ -177,4 +177,8 @@ def createUser(username: String, email: String): Either[Errors, User] =
 createUser("Noel", "noel@underscore.io")
 createUser("", "dave@underscore.io@io")
 
+// 这个案例研究是一个去除而不是建立抽象的练习。从一个相当复杂的Check类型开始。一旦意识到混淆了两个概念，我们就把Predicate分离出来，留下可以用Kleisli实现的东西。
+//
+//我们在上面做的几个设计选择，一些开发者可能不同意。将Predicate转换为函数的方法是否真的应该被称为run而不是toFunction？Predicate是否应该首先是Function的一个子类型？许多函数式程序员喜欢避免使用子类型，因为它与隐式解析和类型推理的关系很差，但在这里使用它可能会有争议。和以往一样，最好的决定取决于库的使用环境。
+
 

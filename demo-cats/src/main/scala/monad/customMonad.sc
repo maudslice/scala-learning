@@ -34,6 +34,7 @@ def retry[F[_] : Monad, A](start: A)(f: A => F[A]): F[A] =
 // retry不是堆栈安全的
 
 import cats.syntax.all._
+import cats.instances.option._
 
 retry(100)(a => if (a == 0) None else Some(a - 1))
 //retry(100000)(a => if (a == 0) None else Some(a - 1)) //StackOverflowError
