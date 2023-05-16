@@ -186,7 +186,7 @@ val checkEmail: Check[Errors, String, String] =
 final case class User(username: String, email: String)
 
 def createUser(username: String, email: String): Validated[Errors, User] =
-  (checkUsername(username), checkEmail(email)).mapN(User)
+  (checkUsername(username), checkEmail(email)).mapN(User.apply)
 
 createUser("Noel", "noel@underscore.io")
 createUser("", "dave@underscore.io@io")

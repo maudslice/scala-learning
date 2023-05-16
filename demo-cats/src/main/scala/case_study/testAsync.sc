@@ -33,7 +33,7 @@ def testTotalUptime(): Unit = {
   // getTotalUptime是异步的, 结果类型是Future[Int], 不能直接进行比较
   // 有几种办法可以解决这个问题, 可以修改代码来让测试代码适应异步
   // 也可以把service代码变成同步的, 这样就不用修改测试代码了
-  assert(actual == expected)
+//  assert(actual == expected)
 }
 
 // 实现两个版本的UptimeClient：一个异步的用于生产，一个同步的用于单元测试:
@@ -63,13 +63,13 @@ trait RealUptimeClient extends UptimeClient2[Future] {
   def getUptime(hostname: String): Future[Int]
 }
 
-trait TestUptimeClient extends UptimeClient2[Id] {
+trait TestUptimeClient2 extends UptimeClient2[Id] {
   // 因为Id[Int]只是Int的别名, 所以返回类型可以写成Int
   def getUptime(hostname: String): Int
 }
 
 // 最后, 重新实现TestUptimeClient, 接受一个Map作为参数
-class TestUptimeClient2(hosts: Map[String, Int]) extends UptimeClient2[Id] {
+class TestUptimeClientReImpl(hosts: Map[String, Int]) extends UptimeClient2[Id] {
   override def getUptime(hostname: String): Int = hosts.getOrElse(hostname, 0)
 }
 
@@ -92,7 +92,7 @@ class UptimeService2[F[_]](client: UptimeClient2[F])
 }
 
 // 上下文绑定语法
-class UptimeService2[F[_] : Applicative](client: UptimeClient2[F]) {
+class UptimeServiceBC[F[_] : Applicative](client: UptimeClient2[F]) {
   def getTotalUptime(hostnames: List[String]): F[Int] =
     hostnames.traverse(client.getUptime).map(_.sum)
 }
@@ -100,7 +100,7 @@ class UptimeService2[F[_] : Applicative](client: UptimeClient2[F]) {
 // 现在, 不需要对测试代码进行任何的更改, 就能运行单元测试
 def testTotalUptime2(): Unit = {
   val hosts = Map("host1" -> 10, "host2" -> 6)
-  val client = new TestUptimeClient2(hosts)
+  val client = new TestUptimeClientReImpl(hosts)
   val service = new UptimeService2(client)
   val actual = service.getTotalUptime(hosts.keys.toList)
   val expected = hosts.values.sum

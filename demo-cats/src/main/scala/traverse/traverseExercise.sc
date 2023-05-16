@@ -40,7 +40,7 @@ import cats.instances.list._ // for Monoid
 
 type ErrorsOr[A] = Validated[List[String], A]
 
-def process(inputs: List[Int]): ErrorsOr[List[Int]] =
+def process2(inputs: List[Int]): ErrorsOr[List[Int]] =
   listTraverse(inputs) { n =>
     if(n % 2 == 0) {
       Validated.valid(n)
@@ -49,8 +49,8 @@ def process(inputs: List[Int]): ErrorsOr[List[Int]] =
     }
   }
 
-process(List(2, 4, 6))
+process2(List(2, 4, 6))
 // res4: Valid(List(2, 4, 6))
-process(List(1, 2, 3))
+process2(List(1, 2, 3))
 // res5: Invalid(List(1 is not even, 3 is not even))
 // 在validated上的semigroupal combine的语义是累积错误处理，所以结果要么是一个偶数Ints的列表，要么是一个错误列表

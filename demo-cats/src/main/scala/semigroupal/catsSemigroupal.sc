@@ -83,19 +83,19 @@ import cats.instances.list._ // for Monoid
 import cats.instances.string._ // for Monoid
 import cats.syntax.apply._ // for imapN
 
-final case class Cat(
+final case class Cat2(
                       name: String,
                       yearOfBirth: Int,
                       favoriteFoods: List[String]
                     )
 
-val tupleToCat: (String, Int, List[String]) => Cat =
-  Cat.apply
+val tupleToCat: (String, Int, List[String]) => Cat2 =
+  Cat2.apply
 
-val catToTuple: Cat => (String, Int, List[String]) =
+val catToTuple: Cat2 => (String, Int, List[String]) =
   cat => (cat.name, cat.yearOfBirth, cat.favoriteFoods)
 
-implicit val catMonoid: Monoid[Cat] = (
+implicit val catMonoid: Monoid[Cat2] = (
   Monoid[String],
   Monoid[Int],
   Monoid[List[String]]
@@ -103,8 +103,8 @@ implicit val catMonoid: Monoid[Cat] = (
 
 import cats.syntax.semigroup._ // for |+|
 
-val garfield   = Cat("Garfield", 1978, List("Lasagne"))
-val heathcliff = Cat("Heathcliff", 1988, List("Junk Food"))
+val garfield   = Cat2("Garfield", 1978, List("Lasagne"))
+val heathcliff = Cat2("Heathcliff", 1988, List("Junk Food"))
 
 garfield |+| heathcliff
 // res14: Cat = Cat("GarfieldHeathcliff", 3966, List("Lasagne", "Junk Food"))
@@ -127,7 +127,7 @@ val futureCat = (
   Future("Garfield"),
   Future(1978),
   Future(List("Lasagne"))
-  ).mapN(Cat.apply)
+  ).mapN(Cat2.apply)
 
 Await.result(futureCat, 1.second)
 // res1: Cat = Cat("Garfield", 1978, List("Lasagne"))
@@ -166,7 +166,7 @@ def product[F[_]: Monad, A, B](fa: F[A], fb: F[B]): F[(A,B)] =
   )
 
 // for推导风格
-def product[F[_]: Monad, A, B](fa: F[A], fb: F[B]): F[(A,B)] = for {
+def product2[F[_]: Monad, A, B](fa: F[A], fb: F[B]): F[(A,B)] = for {
   a <- fa
   b <- fb
 } yield (a, b)

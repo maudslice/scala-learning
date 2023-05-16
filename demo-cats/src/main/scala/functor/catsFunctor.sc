@@ -8,7 +8,7 @@ val f2 = (y: Double) => y * 2
 
 val f3: Int => Double = f1 map f2 // 使用map组合两个函数
 (f1 map f2) (1)
-val f3: Int => Double = f1 andThen f2 // 使用andThen组合两个函数
+val f4: Int => Double = f1 andThen f2 // 使用andThen组合两个函数
 (f1 andThen f2) (1)
 f2(f1(1)) //手动组合两个函数
 
@@ -17,7 +17,7 @@ val func =
   ((x: Int) => x.toDouble).
     map(x => x + 1).
     map(x => x * 2).
-    map(x => s"${x}!")
+    map(x => s"$x!")
 
 func(123)
 
@@ -34,9 +34,9 @@ val option1 = Option(123)
 val option2 = Functor[Option].map(option1)(_.toString)
 
 // lift 操作
-val func = (x: Int) => x + 1
+val func2 = (x: Int) => x + 1
 // Int => Int lifted => Option[Int] => Option[Int]
-val liftFunc = Functor[Option].lift(func)
+val liftFunc = Functor[Option].lift(func2)
 Functor[List].as(list1, "as")
 
 // 使用高阶类型参数
@@ -67,13 +67,11 @@ implicit def futureFunctor
 
 // 每当直接或间接调用futureFunctor时, 编译器会隐式定位并在调用的地方搜索隐式参数Functor[Future], 并递归搜索一个ExecutionContext
 // We write this:
-{
-  implicit val ec: ExecutionContext = ExecutionContext.Implicits.global
-  Functor[Future]
+implicit val ec: ExecutionContext = ExecutionContext.Implicits.global
+Functor[Future]
 
-  // The compiler expands to this first:
-  Functor[Future](futureFunctor)
+// The compiler expands to this first:
+Functor[Future](futureFunctor)
 
-  // And then to this:
-  Functor[Future](futureFunctor(ec))
-}
+// And then to this:
+Functor[Future](futureFunctor(ec))

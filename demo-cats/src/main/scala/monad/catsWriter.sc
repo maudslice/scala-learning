@@ -17,7 +17,7 @@ import cats.syntax.applicative._ // for pure
 type Logged[A] = Writer[Vector[String], A]
 123.pure[Logged]
 // ? 作为 Writer 的类型参数 A 的占位符。这个占位符告诉编译器我们想要使用 Writer[Vector[String], A] 的部分应用类型
-123.pure[Writer[Vector[String], ?]]
+//123.pure[Writer[Vector[String], ?]]
 
 // 创建Writer实例:
 // 如果只有日志没有结果, 可以使用cats.syntax.writer提供的tell语法创建一个Writer[Unit]

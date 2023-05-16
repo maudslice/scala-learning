@@ -1,7 +1,7 @@
 val scala3Version = "3.2.1"
 val scala2Version = "2.13.10"
 
-ThisBuild / scalaVersion := scala2Version
+ThisBuild / scalaVersion := scala3Version
 ThisBuild / organization := "com.maud"
 
 lazy val commonSettings = Seq(
@@ -9,7 +9,7 @@ lazy val commonSettings = Seq(
     "-feature",
     "-deprecation",
     "-unchecked",
-    "-Xfatal-warnings",
+//    "-Xfatal-warnings",
     "-encoding", "UTF-8",
     "-language:_"
   ),

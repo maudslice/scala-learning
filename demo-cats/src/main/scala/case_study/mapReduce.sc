@@ -89,7 +89,7 @@ import cats.instances.vector._ // for Foldable and Traverse
 import cats.syntax.foldable._  // for combineAll and foldMap
 import cats.syntax.traverse._  // for traverse
 
-def parallelFoldMap[A, B: Monoid](values: Vector[A])(func: A => B): Future[B] = {
+def parallelFoldMap2[A, B: Monoid](values: Vector[A])(func: A => B): Future[B] = {
   // Calculate the number of items to pass to each CPU:
   val numCores = Runtime.getRuntime.availableProcessors
   val groupSize = (1.0 * values.size / numCores).ceil.toInt

@@ -1,5 +1,3 @@
-import cats.Invariant.ops.toAllInvariantOps
-import cats.InvariantSemigroupal.ops.toAllInvariantSemigroupalOps
 import cats.Monoid
 import cats.instances.string._
 import cats.syntax.invariant._

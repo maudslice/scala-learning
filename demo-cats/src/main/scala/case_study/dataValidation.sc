@@ -1,11 +1,14 @@
 
-trait Check[E, A] {
-  // 使用semigroup来合并两个error, 这里不使用monoid是因为不需要identity elem, 应该让我们的约束尽可能的小
-  def and(that: Check[E, A]): Check[E, A] =
-    ???
+/*
+  trait Check[E, A] {
+    // 使用semigroup来合并两个error, 这里不使用monoid是因为不需要identity elem, 应该让我们的约束尽可能的小
+    def and(that: Check[E, A]): Check[E, A] =
+      ???
 
-  // other methods...
-}
+    // other methods...
+  }
+*/
+
 
 // 至少有两种实现and的方式
 // 第一种, 将check表示为函数, Check数据类型成为一个提供组合方法的函数的简单封装
@@ -54,10 +57,10 @@ check(0)
 // val res1: Either[List[String],Int] = Left(List(Must be > 2, Must be < -2))
 
 // 如果试图创建CheckF，却以无法积累的类型表示error，会发生什么？例如，Nothing就没有Semigroup实例。如果创建CheckF[Nothing, A]的实例会怎样？
-val a: CheckF[Nothing, Int] =
+val a1: CheckF[Nothing, Int] =
   CheckF(v => v.asRight)
 
-val b: CheckF[Nothing, Int] =
+val b1: CheckF[Nothing, Int] =
   CheckF(v => v.asRight)
 
 //val check = a and b
@@ -94,15 +97,15 @@ object Check {
 }
 
 // 使用Check
-val a: Check[List[String], Int] =
+val a2: Check[List[String], Int] =
   Check.pure(v => if (v > 2) v.asRight else List("Must be > 2").asLeft)
-val b: Check[List[String], Int] =
+val b2: Check[List[String], Int] =
   Check.pure(v => if (v < -2) v.asRight else List("Must be < -2").asLeft)
 
-val check: Check[List[String], Int] = a and b
+val checkk: Check[List[String], Int] = a2 and b2
 
-check(0)
-check(5)
+checkk(0)
+checkk(5)
 
 // 虽然ADT的实现比函数包装器的实现更加冗长，但它的优点是将计算的结构（我们创建的ADT实例）与赋予它意义的过程（apply方法）干净地分开。从这里我们有很多选择：
 //

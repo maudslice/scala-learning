@@ -32,12 +32,12 @@ filter(List(1, 2, 3))(_ % 2 == 1)
 // res11: List[Int] = List(1, 3)
 
 def sumViaNumeric[A: Numeric](as: List[A]): A =
-  as.foldLeft(implicitly.zero)(implicitly.plus)
+  as.foldLeft(summon.zero)(summon.plus)
 
 sumViaNumeric(List(1, 2, 3))
 
 import cats.Monoid
 def sumViaMonad[A: Monoid](as: List[A]): A =
-  as.foldLeft(implicitly.empty)(implicitly.combine)
+  as.foldLeft(summon.empty)(summon.combine)
 
 sumViaMonad(List(1, 2, 3))

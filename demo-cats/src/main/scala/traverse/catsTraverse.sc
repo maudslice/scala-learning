@@ -55,7 +55,8 @@ Await.result(numbers2, 1.second)
 // 语法版本的方法:
 import cats.syntax.traverse._ // for sequence and traverse
 
-Await.result(hostnames.traverse(getUptime), 1.second)
+// scala3 编译器有bug吧, 总之先注释了, 在scala2中可以编译
+//Await.result(hostnames.traverse(getUptime), 1.second)
 // res2: List[Int] = List(1020, 960, 840)
-Await.result(numbers.sequence, 1.second)
+//Await.result(numbers.sequence, 1.second)
 // res3: List[Int] = List(1, 2, 3)

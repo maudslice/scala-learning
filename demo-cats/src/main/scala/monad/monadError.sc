@@ -29,16 +29,16 @@ import cats.syntax.applicative._      // for pure
 import cats.syntax.applicativeError._ // for raiseError etc
 import cats.syntax.monadError._       // for ensure
 
-val success = 42.pure[ErrorOr]
+val success2 = 42.pure[ErrorOr]
 // success: ErrorOr[Int] = Right(42)
-val failure = "Badness".raiseError[ErrorOr, Int]
+val failure2 = "Badness".raiseError[ErrorOr, Int]
 // failure: ErrorOr[Int] = Left("Badness")
-failure.handleErrorWith{
+failure2.handleErrorWith{
   case "Badness" => 256.pure
   case _ => "It's not ok".raiseError
 }
 // res4: ErrorOr[Int] = Right(256)
-success.ensure("Number to low!")(_ > 1000)
+success2.ensure("Number to low!")(_ > 1000)
 // res5: ErrorOr[Int] = Left("Number to low!")
 
 // cats为scala.util.Try也提供了MonadError

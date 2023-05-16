@@ -66,11 +66,11 @@ sumSquare(Option(3), Option(4))
 sumSquare(List(1, 2, 3), List(4, 5))
 
 // 也可以使用for推导式来实现上面的代码, 编译器会自动插入需要的隐式转换
-def sumSquare[F[_] : Monad](a: F[Int], b: F[Int]): F[Int] =
+def sumSquare2[F[_] : Monad](a: F[Int], b: F[Int]): F[Int] =
   for {
     ax <- a
     bx <- b
   } yield ax * ax + bx * bx
 
-sumSquare(Option(3), Option(4))
-sumSquare(List(1, 2, 3), List(4, 5))
+sumSquare2(Option(3), Option(4))
+sumSquare2(List(1, 2, 3), List(4, 5))

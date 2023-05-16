@@ -66,9 +66,9 @@ Foldable[List].foldMap(List(1, 2, 3))(_.toString)
 // 组合Foldables来支持嵌套序列的深度遍历
 import cats.instances.vector._ // for Monoid
 
-val ints = List(Vector(1, 2, 3), Vector(4, 5, 6))
+val ints2 = List(Vector(1, 2, 3), Vector(4, 5, 6))
 
-(Foldable[List] compose Foldable[Vector]).combineAll(ints)
+(Foldable[List] compose Foldable[Vector]).combineAll(ints2)
 // res11: Int = 21
 
 // 通过foldable的语法来使用foldable

@@ -33,8 +33,8 @@ val both = for {
   b <- step2
 } yield (a, b)
 
-val (state, res) = both.run(20).value
-// state: Int = 42
+val (state2, res) = both.run(20).value
+// state2: Int = 42
 // result: (String, String) = ("Result of step1: 21", "Result of step2: 42")
 
 // State的一般使用模式
@@ -79,6 +79,6 @@ val program: State[Int, (Int, Int, Int)] = for {
 } yield (a, b, c)
 // program: State[Int, (Int, Int, Int)] = cats.data.IndexedStateT@3b525fbf
 
-val (state, result) = program.run(1).value
-// state: Int = 3
+val (state3, result3) = program.run(1).value
+// state3: Int = 3
 // result: (Int, Int, Int) = (1, 2, 3000)

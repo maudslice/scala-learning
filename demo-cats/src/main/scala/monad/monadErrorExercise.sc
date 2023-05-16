@@ -2,8 +2,10 @@ import cats.MonadError
 
 import scala.util.Try
 
+/*
 def validateAdult[F[_]](age: Int)(implicit me: MonadError[F, Throwable]): F[Int] =
   ???
+*/
 
 // 如果age>18, 返回success
 def validateAdult[F[_]](age: Int)(implicit me: MonadError[F, Throwable]): F[Int] =
