@@ -19,7 +19,8 @@ lazy val commonSettings = Seq(
 lazy val scalaLearning = (project in file("."))
   .aggregate(
     demoCats,
-    demoShapeless,
+    demoShapeless2,
+    demoShapeless3,
     demoFpInScala,
     demoCatsEffect,
     demoCatsParse,
@@ -29,7 +30,6 @@ lazy val scalaLearning = (project in file("."))
   .settings(commonSettings)
   .settings(
     name := "scala-learning",
-    crossScalaVersions := Nil,
   )
 
 lazy val demoCats = (project in file("demo-cats"))
@@ -42,40 +42,31 @@ lazy val demoCats = (project in file("demo-cats"))
     ),
   )
 
-lazy val demoShapeless = (project in file("demo-shapeless"))
+lazy val demoShapeless3 = (project in file("demo-shapeless3"))
   .settings(commonSettings)
   .settings(
-    name := "demo-shapeless",
-    crossScalaVersions := List(scala2Version, scala3Version),
-    libraryDependencies ++= {
-//      Seq(
-//        shapeless,
-//        catsCore,
-//        scalaCheck
-//      )
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((3, _)) => Seq(
-          shapeless,
-          catsCore,
-          scalaCheck
-        )
-        case Some((2, _)) => Seq(
-          shapeless2,
-          catsCore,
-          scalaCheck
-        )
-        case _ => Seq()
-      }
-    },
-    scalacOptions --= {
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((2, _)) => Seq(
-          "-language:strictEquality",
-          "-Xmax-inlines:64"
-        )
-        case _ => Seq()
-      }
-    }
+    name := "demo-shapeless3",
+    libraryDependencies ++= Seq(
+      shapeless3,
+      catsCore,
+      scalaCheck
+    ),
+  )
+
+lazy val demoShapeless2 = (project in file("demo-shapeless2"))
+  .settings(commonSettings)
+  .settings(
+    name := "demo-shapeless2",
+    scalaVersion := scala2Version,
+    libraryDependencies ++= Seq(
+      shapeless2,
+      catsCore,
+      scalaCheck
+    ),
+    scalacOptions --= Seq(
+      "-language:strictEquality",
+      "-Xmax-inlines:64"
+    )
   )
 
 lazy val demoFpInScala = (project in file("demo-fp"))
@@ -125,7 +116,7 @@ lazy val demoFs2 = (project in file("demo-fs2"))
 
 // functional
 
-val shapelessVersion = "3.3.0"
+val shapeless3Version = "3.3.0"
 val shapeless2Version = "2.3.10"
 val catsVersion = "2.9.0"
 val catsEffectVersion = "3.4.8"
@@ -150,8 +141,8 @@ val redis4CatsVersion = "1.4.0"
 val jawnAstVersion = "1.4.0"
 val zioVersion = "2.0.8"
 
-val shapeless = "org.typelevel" %% "shapeless3-deriving" % shapelessVersion
-val shapeless2 = "com.chuusai" %% "shapeless" % shapeless2Version
+val shapeless3 = "org.typelevel" %% "shapeless3-deriving" % shapeless3Version withJavadoc()
+val shapeless2 = "com.chuusai" % "shapeless_2.13" % shapeless2Version
 val catsCore = "org.typelevel" %% "cats-core" % catsVersion
 val alleyCatsCore = "org.typelevel" %% "alleycats-core" % catsVersion
 val catsEffect = "org.typelevel" %% "cats-effect" % catsEffectVersion withSources() withJavadoc()

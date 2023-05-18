@@ -14,14 +14,12 @@ def iceCreamCsv(c: IceCream): List[String] =
 
 // 泛型编程就是要克服像这样的差异。Shapeless使我们能够方便地将特定的类型转换成我们可以用普通代码操作的通用类型。
 
-val genericEmployee = Generic[Employee].to(Employee("Dave", 123, manager = false))
-// genericEmployee: String :: Int :: Boolean :: shapeless.HNil = Dave :: 123 :: false :: HNil
+val genericEmployee: String *: Int *: Boolean *: EmptyTuple = Tuple.fromProductTyped(Employee("Dave", 123, false))
 
-val genericIceCream = Generic[IceCream].to(IceCream("Sundae", 1, inCone = false))
-// genericIceCream: String :: Int :: Boolean :: shapeless.HNil = Sundae :: 1 :: false :: HNil
+val genericIceCream: String *: Int *: Boolean *: EmptyTuple = Tuple.fromProductTyped(IceCream("Sundae", 1, false))
 
 // 现在两个值都是同一类型, 它们都是heterogeneous lists(简称HList), 下面使用同一个序列化函数来序列化这两个值
-def genericCsv(gen: String :: Int :: Boolean :: HNil): List[String] = {
+def genericCsv(gen: String *: Int *: Boolean *: EmptyTuple): List[String] = {
   // 似乎是idea scala plugin的bug, scalac可以正常编译下面的代码
   // 码的怎么这么多bug
   List(gen(0), gen(1).toString, gen(2).toString)
