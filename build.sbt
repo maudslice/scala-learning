@@ -9,9 +9,10 @@ lazy val commonSettings = Seq(
     "-feature",
     "-deprecation",
     "-unchecked",
-//    "-Xfatal-warnings",
+    "-Xfatal-warnings",
     "-encoding", "UTF-8",
-    "-language:_"
+    "-language:strictEquality",
+    "-Xmax-inlines:64"
   ),
 )
 
@@ -24,9 +25,11 @@ lazy val scalaLearning = (project in file("."))
     demoCatsParse,
     demoFs2
   )
+  .enablePlugins(JavaAppPackaging)
   .settings(commonSettings)
   .settings(
     name := "scala-learning",
+    crossScalaVersions := Nil,
   )
 
 lazy val demoCats = (project in file("demo-cats"))
@@ -43,8 +46,13 @@ lazy val demoShapeless = (project in file("demo-shapeless"))
   .settings(commonSettings)
   .settings(
     name := "demo-shapeless",
-    crossScalaVersions := List(scala3Version, scala2Version),
+    crossScalaVersions := List(scala2Version, scala3Version),
     libraryDependencies ++= {
+//      Seq(
+//        shapeless,
+//        catsCore,
+//        scalaCheck
+//      )
       CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((3, _)) => Seq(
           shapeless,

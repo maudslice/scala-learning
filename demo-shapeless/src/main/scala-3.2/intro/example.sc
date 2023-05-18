@@ -1,4 +1,4 @@
-import shapeless._
+import shapeless3.deriving.*
 
 // 如何利用类型之间的相似性来避免重复?
 case class Employee(name: String, number: Int, manager: Boolean)
